@@ -56,6 +56,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F4A9492327EB485600A8ECC8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F4A9492027EB19E200A8ECC8 /* ARReceiver.swift */,
+				F4D739D027EA15B500EF6FF4 /* SignallingClient.swift */,
+				F4D739DC27EA4C7D00EF6FF4 /* WebRTCClient.swift */,
+				F4D739D227EA16CA00EF6FF4 /* WebSocketProvider.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F4A9492427EB487500A8ECC8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F4D739D427EA23AD00EF6FF4 /* Message.swift */,
+				F4D739D627EA240200EF6FF4 /* IceCandidate.swift */,
+				F4D739D727EA240200EF6FF4 /* RTCStates.swift */,
+				F4D739D827EA240200EF6FF4 /* SessionDescription.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		F4D739AE27EA0F7F00EF6FF4 = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +97,8 @@
 		F4D739B927EA0F7F00EF6FF4 /* ios-streaming-app */ = {
 			isa = PBXGroup;
 			children = (
+				F4A9492427EB487500A8ECC8 /* Models */,
+				F4A9492327EB485600A8ECC8 /* Services */,
 				F4A9491F27EAFDFE00A8ECC8 /* Info.plist */,
 				F4D739BA27EA0F7F00EF6FF4 /* AppDelegate.swift */,
 				F4D739BC27EA0F7F00EF6FF4 /* ViewController.swift */,
@@ -82,14 +106,6 @@
 				F4D739C027EA0F8000EF6FF4 /* Main.storyboard */,
 				F4D739C327EA0F8100EF6FF4 /* Assets.xcassets */,
 				F4D739C527EA0F8100EF6FF4 /* LaunchScreen.storyboard */,
-				F4D739D027EA15B500EF6FF4 /* SignallingClient.swift */,
-				F4D739D227EA16CA00EF6FF4 /* WebSocketProvider.swift */,
-				F4D739D427EA23AD00EF6FF4 /* Message.swift */,
-				F4D739D627EA240200EF6FF4 /* IceCandidate.swift */,
-				F4D739D727EA240200EF6FF4 /* RTCStates.swift */,
-				F4D739D827EA240200EF6FF4 /* SessionDescription.swift */,
-				F4D739DC27EA4C7D00EF6FF4 /* WebRTCClient.swift */,
-				F4A9492027EB19E200A8ECC8 /* ARReceiver.swift */,
 				F4A9492227EB2AD800A8ECC8 /* README.md */,
 			);
 			path = "ios-streaming-app";
