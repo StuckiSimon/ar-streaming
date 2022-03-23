@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "AR Streaming",
+  "name": "AR Streaming Web Client",
   "icons": [
     {
       "src": "favicon.ico",

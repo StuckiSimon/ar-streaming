@@ -1,4 +1,3 @@
-import "./App.css";
 import Replay from "./Replay";
 
 function App() {
