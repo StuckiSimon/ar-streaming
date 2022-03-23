@@ -16,17 +16,17 @@ let clientId = 0;
 wss.on("connection", (ws) => {
   const myId = clientId++;
   console.log(
-    `Client connected ${myId}. Total connected clients: ${wss.clients.size}`
+    `Client #${myId} connected. Total connected clients: ${wss.clients.size}`
   );
 
   ws.onmessage = (message) => {
-    console.log(`${myId}: ` + message.data + "\n");
+    console.log(`#${myId}: ` + message.data + "\n");
     broadcast(ws, message.data);
   };
 
   ws.onclose = () => {
     console.log(
-      `Client disconnected ${myId}. Total connected clients: ${wss.clients.size}`
+      `Client #${myId} disconnected. Total connected clients: ${wss.clients.size}`
     );
   };
 });
