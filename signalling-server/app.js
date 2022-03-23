@@ -4,10 +4,9 @@ const wss = new WebSocket.Server({ port: 8080 }, () => {
   console.log("Signalling server is now listening on port 8080");
 });
 
-// Broadcast to all.
-wss.broadcast = (ws, data) => {
+const broadcast = (self, data) => {
   wss.clients.forEach((client) => {
-    if (client !== ws && client.readyState === WebSocket.OPEN) {
+    if (client !== self && client.readyState === WebSocket.OPEN) {
       client.send(data);
     }
   });
@@ -22,7 +21,7 @@ wss.on("connection", (ws) => {
 
   ws.onmessage = (message) => {
     console.log(`${myId}: ` + message.data + "\n");
-    wss.broadcast(ws, message.data);
+    broadcast(ws, message.data);
   };
 
   ws.onclose = () => {
