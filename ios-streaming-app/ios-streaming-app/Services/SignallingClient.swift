@@ -19,8 +19,7 @@ class SignallingClient {
     weak var delegate: SignallingClientDelegate?
     private let decoder = JSONDecoder()
     private let encoder = JSONEncoder()
-    // TODO: extract magic variable
-    private lazy var webSocket = WebSocketProvider(url: URL(string: "ws://192.168.0.201:8080")!)
+    private lazy var webSocket = WebSocketProvider(url: Config.standard.signallingServerUrl)
     
     func connect() {
         self.webSocket.delegate = self
