@@ -1,0 +1,14 @@
+{
+  "name": "signalling-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "ws": "^8.5.0"
+  }
+}

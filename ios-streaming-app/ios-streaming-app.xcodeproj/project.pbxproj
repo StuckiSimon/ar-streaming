@@ -1,0 +1,434 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F4A9492127EB19E200A8ECC8 /* ARReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A9492027EB19E200A8ECC8 /* ARReceiver.swift */; };
+		F4D739BB27EA0F7F00EF6FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739BA27EA0F7F00EF6FF4 /* AppDelegate.swift */; };
+		F4D739BD27EA0F7F00EF6FF4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739BC27EA0F7F00EF6FF4 /* ViewController.swift */; };
+		F4D739BF27EA0F7F00EF6FF4 /* Experience.rcproject in Sources */ = {isa = PBXBuildFile; fileRef = F4D739BE27EA0F7F00EF6FF4 /* Experience.rcproject */; };
+		F4D739C227EA0F8000EF6FF4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4D739C027EA0F8000EF6FF4 /* Main.storyboard */; };
+		F4D739C427EA0F8100EF6FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4D739C327EA0F8100EF6FF4 /* Assets.xcassets */; };
+		F4D739C727EA0F8100EF6FF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4D739C527EA0F8100EF6FF4 /* LaunchScreen.storyboard */; };
+		F4D739CF27EA101E00EF6FF4 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = F4D739CE27EA101E00EF6FF4 /* WebRTC */; };
+		F4D739D127EA15B500EF6FF4 /* SignallingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D027EA15B500EF6FF4 /* SignallingClient.swift */; };
+		F4D739D327EA16CA00EF6FF4 /* WebSocketProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D227EA16CA00EF6FF4 /* WebSocketProvider.swift */; };
+		F4D739D527EA23AD00EF6FF4 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D427EA23AD00EF6FF4 /* Message.swift */; };
+		F4D739D927EA240200EF6FF4 /* IceCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D627EA240200EF6FF4 /* IceCandidate.swift */; };
+		F4D739DA27EA240200EF6FF4 /* RTCStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D727EA240200EF6FF4 /* RTCStates.swift */; };
+		F4D739DB27EA240200EF6FF4 /* SessionDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739D827EA240200EF6FF4 /* SessionDescription.swift */; };
+		F4D739DD27EA4C7D00EF6FF4 /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D739DC27EA4C7D00EF6FF4 /* WebRTCClient.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F4A9491F27EAFDFE00A8ECC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F4A9492027EB19E200A8ECC8 /* ARReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARReceiver.swift; sourceTree = "<group>"; };
+		F4A9492227EB2AD800A8ECC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F4D739B727EA0F7F00EF6FF4 /* ios-streaming-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-streaming-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4D739BA27EA0F7F00EF6FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F4D739BC27EA0F7F00EF6FF4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F4D739BE27EA0F7F00EF6FF4 /* Experience.rcproject */ = {isa = PBXFileReference; lastKnownFileType = file.rcproject; path = Experience.rcproject; sourceTree = "<group>"; };
+		F4D739C127EA0F8000EF6FF4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F4D739C327EA0F8100EF6FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F4D739C627EA0F8100EF6FF4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4D739D027EA15B500EF6FF4 /* SignallingClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignallingClient.swift; sourceTree = "<group>"; };
+		F4D739D227EA16CA00EF6FF4 /* WebSocketProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketProvider.swift; sourceTree = "<group>"; };
+		F4D739D427EA23AD00EF6FF4 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		F4D739D627EA240200EF6FF4 /* IceCandidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceCandidate.swift; sourceTree = "<group>"; };
+		F4D739D727EA240200EF6FF4 /* RTCStates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RTCStates.swift; sourceTree = "<group>"; };
+		F4D739D827EA240200EF6FF4 /* SessionDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDescription.swift; sourceTree = "<group>"; };
+		F4D739DC27EA4C7D00EF6FF4 /* WebRTCClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4D739B427EA0F7F00EF6FF4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4D739CF27EA101E00EF6FF4 /* WebRTC in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4D739AE27EA0F7F00EF6FF4 = {
+			isa = PBXGroup;
+			children = (
+				F4D739B927EA0F7F00EF6FF4 /* ios-streaming-app */,
+				F4D739B827EA0F7F00EF6FF4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4D739B827EA0F7F00EF6FF4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4D739B727EA0F7F00EF6FF4 /* ios-streaming-app.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4D739B927EA0F7F00EF6FF4 /* ios-streaming-app */ = {
+			isa = PBXGroup;
+			children = (
+				F4A9491F27EAFDFE00A8ECC8 /* Info.plist */,
+				F4D739BA27EA0F7F00EF6FF4 /* AppDelegate.swift */,
+				F4D739BC27EA0F7F00EF6FF4 /* ViewController.swift */,
+				F4D739BE27EA0F7F00EF6FF4 /* Experience.rcproject */,
+				F4D739C027EA0F8000EF6FF4 /* Main.storyboard */,
+				F4D739C327EA0F8100EF6FF4 /* Assets.xcassets */,
+				F4D739C527EA0F8100EF6FF4 /* LaunchScreen.storyboard */,
+				F4D739D027EA15B500EF6FF4 /* SignallingClient.swift */,
+				F4D739D227EA16CA00EF6FF4 /* WebSocketProvider.swift */,
+				F4D739D427EA23AD00EF6FF4 /* Message.swift */,
+				F4D739D627EA240200EF6FF4 /* IceCandidate.swift */,
+				F4D739D727EA240200EF6FF4 /* RTCStates.swift */,
+				F4D739D827EA240200EF6FF4 /* SessionDescription.swift */,
+				F4D739DC27EA4C7D00EF6FF4 /* WebRTCClient.swift */,
+				F4A9492027EB19E200A8ECC8 /* ARReceiver.swift */,
+				F4A9492227EB2AD800A8ECC8 /* README.md */,
+			);
+			path = "ios-streaming-app";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4D739B627EA0F7F00EF6FF4 /* ios-streaming-app */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4D739CA27EA0F8100EF6FF4 /* Build configuration list for PBXNativeTarget "ios-streaming-app" */;
+			buildPhases = (
+				F4D739B327EA0F7F00EF6FF4 /* Sources */,
+				F4D739B427EA0F7F00EF6FF4 /* Frameworks */,
+				F4D739B527EA0F7F00EF6FF4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ios-streaming-app";
+			packageProductDependencies = (
+				F4D739CE27EA101E00EF6FF4 /* WebRTC */,
+			);
+			productName = "ios-streaming-app";
+			productReference = F4D739B727EA0F7F00EF6FF4 /* ios-streaming-app.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4D739AF27EA0F7F00EF6FF4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					F4D739B627EA0F7F00EF6FF4 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = F4D739B227EA0F7F00EF6FF4 /* Build configuration list for PBXProject "ios-streaming-app" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F4D739AE27EA0F7F00EF6FF4;
+			packageReferences = (
+				F4D739CD27EA101E00EF6FF4 /* XCRemoteSwiftPackageReference "WebRTC" */,
+			);
+			productRefGroup = F4D739B827EA0F7F00EF6FF4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4D739B627EA0F7F00EF6FF4 /* ios-streaming-app */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4D739B527EA0F7F00EF6FF4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4D739C727EA0F8100EF6FF4 /* LaunchScreen.storyboard in Resources */,
+				F4D739C427EA0F8100EF6FF4 /* Assets.xcassets in Resources */,
+				F4D739C227EA0F8000EF6FF4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4D739B327EA0F7F00EF6FF4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4D739D927EA240200EF6FF4 /* IceCandidate.swift in Sources */,
+				F4D739DD27EA4C7D00EF6FF4 /* WebRTCClient.swift in Sources */,
+				F4D739D327EA16CA00EF6FF4 /* WebSocketProvider.swift in Sources */,
+				F4D739D127EA15B500EF6FF4 /* SignallingClient.swift in Sources */,
+				F4D739BD27EA0F7F00EF6FF4 /* ViewController.swift in Sources */,
+				F4D739DB27EA240200EF6FF4 /* SessionDescription.swift in Sources */,
+				F4A9492127EB19E200A8ECC8 /* ARReceiver.swift in Sources */,
+				F4D739D527EA23AD00EF6FF4 /* Message.swift in Sources */,
+				F4D739BB27EA0F7F00EF6FF4 /* AppDelegate.swift in Sources */,
+				F4D739BF27EA0F7F00EF6FF4 /* Experience.rcproject in Sources */,
+				F4D739DA27EA240200EF6FF4 /* RTCStates.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F4D739C027EA0F8000EF6FF4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4D739C127EA0F8000EF6FF4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F4D739C527EA0F8100EF6FF4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4D739C627EA0F8100EF6FF4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4D739C827EA0F8100EF6FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F4D739C927EA0F8100EF6FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4D739CB27EA0F8100EF6FF4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L58QAC2Y62;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-streaming-app/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stucki.ios-streaming-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4D739CC27EA0F8100EF6FF4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L58QAC2Y62;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-streaming-app/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiredDeviceCapabilities = arkit;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.stucki.ios-streaming-app";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4D739B227EA0F7F00EF6FF4 /* Build configuration list for PBXProject "ios-streaming-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4D739C827EA0F8100EF6FF4 /* Debug */,
+				F4D739C927EA0F8100EF6FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4D739CA27EA0F8100EF6FF4 /* Build configuration list for PBXNativeTarget "ios-streaming-app" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4D739CB27EA0F8100EF6FF4 /* Debug */,
+				F4D739CC27EA0F8100EF6FF4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F4D739CD27EA101E00EF6FF4 /* XCRemoteSwiftPackageReference "WebRTC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stasel/WebRTC.git";
+			requirement = {
+				branch = latest;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F4D739CE27EA101E00EF6FF4 /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4D739CD27EA101E00EF6FF4 /* XCRemoteSwiftPackageReference "WebRTC" */;
+			productName = WebRTC;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F4D739AF27EA0F7F00EF6FF4 /* Project object */;
+}

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "WebRTC",
+        "repositoryURL": "https://github.com/stasel/WebRTC.git",
+        "state": {
+          "branch": "latest",
+          "revision": "0f5f7b40b7fa53ad46ccece1665dbca3897df766",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

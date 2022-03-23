@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 256px;
+  grid-template-rows: 1fr 50px;
+  min-height: 100vh;
+}
+
+.video {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.depthMap {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  align-self: center;
+}
+
+.audio {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
