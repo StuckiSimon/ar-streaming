@@ -1,6 +1,7 @@
 import { useMachine } from "@xstate/react";
 import { useEffect, useRef, useState } from "react";
 import { createMachine } from "xstate";
+import { useLogger } from "../core/logger";
 import AudioPlayer from "./AudioPlayer";
 import DepthView from "./DepthView";
 import styles from "./Replay.module.scss";
@@ -34,6 +35,7 @@ const p2pMachine = createMachine({
 
 function Replay() {
   const [connectionState, send] = useMachine(p2pMachine);
+  const logger = useLogger();
 
   const [depthData, setDepthData] = useState(null);
   const videoRef = useRef(null);
@@ -43,7 +45,7 @@ function Replay() {
     const socket = new WebSocket(process.env.REACT_APP_SIGNALLING_SERVER_URL);
     // Connection opened
     socket.addEventListener("open", () => {
-      console.log("opened connection to signalling server");
+      logger.log("opened connection to signalling server");
       send("ESTABLISHED");
     });
 
@@ -76,9 +78,8 @@ function Replay() {
       }
     });
     peerConnection.addEventListener("iceconnectionstatechange", (e) => {
-      console.log("ice change", peerConnection.iceConnectionState);
+      logger.log("ice change", peerConnection.iceConnectionState);
       if (peerConnection.iceConnectionState === "disconnected") {
-        console.log("disconnected now, send error");
         send("ERROR");
       }
     });
@@ -87,37 +88,37 @@ function Replay() {
       switch (e.track.kind) {
         case "video":
           videoRef.current.srcObject = e.streams[0];
-          console.log("connected to video");
+          logger.log("connected to video");
           break;
         case "audio":
           audioRef.current.srcObject = e.streams[0];
-          console.log("connected to audio");
+          logger.log("connected to audio");
           break;
         default:
-          console.log(`unknown track kind ${e.track.kind}`);
+          logger.log(`unknown track kind ${e.track.kind}`);
           break;
       }
     });
 
     peerConnection.addEventListener("datachannel", (e) => {
-      console.info("got a data channel", e);
+      logger.log("got a data channel", e);
       const channel = e.channel;
       channel.addEventListener("open", () => {
-        console.log("data channel opened");
+        logger.log("data channel opened");
       });
       channel.addEventListener("close", () => {
-        console.log("data channel closed");
+        logger.log("data channel closed");
       });
       channel.addEventListener("message", (e) => {
         window.depthData = e.data;
         setDepthData(Array.from(new Float32Array(e.data)));
       });
       channel.addEventListener("error", (e) => {
-        console.error("data channel error", e);
+        logger.error("data channel error", e);
       });
     });
 
-    console.log("peerConnection setRemoteDescription start");
+    logger.log("peerConnection setRemoteDescription start");
     // Listen for messages
     socket.addEventListener("message", function (event) {
       (async () => {
@@ -125,7 +126,7 @@ function Replay() {
         const json = JSON.parse(text);
 
         if (json.payload.type === "offer") {
-          console.log("apply remote session description");
+          logger.log("apply remote session description");
           await peerConnection.setRemoteDescription(json.payload);
           try {
             const answer = await peerConnection.createAnswer();
@@ -142,7 +143,7 @@ function Replay() {
               )
             );
           } catch (e) {
-            console.error("create answer error", e);
+            logger.error("create answer error", e);
           }
         } else {
           // ice candidate
@@ -150,7 +151,7 @@ function Replay() {
         }
       })();
     });
-  }, [send]);
+  }, [send, logger]);
 
   return (
     <>

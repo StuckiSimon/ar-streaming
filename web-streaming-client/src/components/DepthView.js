@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLogger } from "../core/logger";
 
 function createShader(gl, type, source) {
   var shader = gl.createShader(type);
@@ -30,6 +31,7 @@ function createProgram(gl, vertexShader, fragmentShader) {
 function DepthView({
   depthData = JSON.parse(localStorage.getItem("depthData")).data,
 }) {
+  const logger = useLogger();
   useEffect(() => {
     /*const canvas = document.querySelector("#glCanvas");
     // Initialize the GL context
@@ -51,7 +53,7 @@ function DepthView({
     if (!depthData) {
       return;
     }
-    console.log("start painting");
+    logger.debug("start painting");
     performance.mark("startPaint");
     const max = depthData.reduce(
       (max, curr) => (max > curr ? max : curr),
@@ -61,7 +63,7 @@ function DepthView({
       (min, curr) => (min < curr ? min : curr),
       Infinity
     );
-    console.log(max, min);
+    logger.debug(max, min);
 
     // slow canvas
     /*
@@ -259,8 +261,8 @@ function DepthView({
       "startPaint",
       "endPaint"
     );
-    console.log(`painting took ${duration} ms`);
-  }, [depthData]);
+    logger.debug(`painting took ${duration} ms`);
+  }, [depthData, logger]);
   return <canvas id="glCanvas" width="256" height="192"></canvas>;
 }
 
