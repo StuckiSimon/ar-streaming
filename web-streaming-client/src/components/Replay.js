@@ -1,37 +1,12 @@
 import { useMachine } from "@xstate/react";
 import { useEffect, useRef, useState } from "react";
-import { createMachine } from "xstate";
 import { useLogger } from "../core/logger";
+import p2pMachine from "../core/p2pMachine";
 import AudioPlayer from "./AudioPlayer";
 import DepthView from "./DepthView";
 import styles from "./Replay.module.scss";
 import StatusInfo from "./StatusInfo";
 import VideoView from "./VideoView";
-
-const p2pMachine = createMachine({
-  id: "p2pMachine",
-  initial: "signalPending",
-  states: {
-    signalPending: {
-      on: {
-        ESTABLISHED: { target: "signalWaiting" },
-        ERROR: { target: "failed" },
-      },
-    },
-    signalWaiting: {
-      on: {
-        ESTABLISHED: { target: "p2pEstablished" },
-        ERROR: { target: "failed" },
-      },
-    },
-    p2pEstablished: {
-      on: {
-        ERROR: { target: "failed" },
-      },
-    },
-    failed: {},
-  },
-});
 
 function Replay() {
   const [connectionState, send] = useMachine(p2pMachine);
