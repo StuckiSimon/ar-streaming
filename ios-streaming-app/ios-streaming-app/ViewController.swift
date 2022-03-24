@@ -7,12 +7,12 @@
 
 import UIKit
 import RealityKit
+import ARKit
 import WebRTC
 
 class ViewController: UIViewController {
     
     @IBOutlet var arView: ARView!
-    
     
     private let signalClient: SignallingClient = SignallingClient()
     private let webRTCClient: WebRTCClient = WebRTCClient(iceServers: [
@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.signalClient.delegate = self
         self.webRTCClient.delegate = self
+        arView.automaticallyConfigureSession = false
         
         let boxAnchor = try! Experience.loadBox()
         arView.scene.anchors.append(boxAnchor)
@@ -38,6 +39,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         self.arReceiver = ARReceiver()
         self.arReceiver.delegate = self
+        arView.session = self.arReceiver.session()
     }
 }
 

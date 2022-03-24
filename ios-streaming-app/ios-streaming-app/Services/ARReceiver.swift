@@ -30,6 +30,10 @@ final class ARReceiver: NSObject, ARSessionDelegate {
         start()
     }
     
+    func session() -> ARSession {
+        return self.arSession
+    }
+    
     // Configure the ARKit session.
     func start() {
         guard ARWorldTrackingConfiguration.supportsFrameSemantics([.sceneDepth, .smoothedSceneDepth]) else { return }
