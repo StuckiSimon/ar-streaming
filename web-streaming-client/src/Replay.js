@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import AudioPlayer from "./AudioPlayer";
 import DepthView from "./DepthView";
 import styles from "./Replay.module.scss";
 import VideoView from "./VideoView";
@@ -136,7 +137,7 @@ function Replay() {
         <DepthView depthData={depthData} />
       </div>
       <div className={styles.audio}>
-        <audio ref={audioRef} id="audio2" autoPlay controls></audio>
+        <AudioPlayer audioRef={audioRef} />
       </div>
     </div>
   );
