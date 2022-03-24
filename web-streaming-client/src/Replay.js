@@ -4,7 +4,6 @@ import DepthView from "./DepthView";
 import styles from "./Replay.module.scss";
 import VideoView from "./VideoView";
 
-let timeout = null;
 function Replay() {
   const [depthData, setDepthData] = useState(null);
   const videoRef = useRef(null);
@@ -74,18 +73,8 @@ function Replay() {
         console.log("data channel closed");
       });
       channel.addEventListener("message", (e) => {
-        // console.log(e);
         window.depthData = e.data;
-        // TODO: this should be debounced...
-        console.log("received dataframe");
-        if (!timeout) {
-          timeout = setTimeout(() => {
-            setDepthData(Array.from(new Float32Array(e.data)));
-            timeout = null;
-          }, 500);
-        }
-        //const decoder = new TextDecoder("utf-8");
-        //console.log(decoder.decode(e.data));
+        setDepthData(Array.from(new Float32Array(e.data)));
       });
       channel.addEventListener("error", (e) => {
         console.error("data channel error", e);
@@ -133,7 +122,6 @@ function Replay() {
         <VideoView videoRef={videoRef} />
       </div>
       <div className={styles.depthMap}>
-        {/*<DepthView depthData={depthData} />*/}
         <DepthView depthData={depthData} />
       </div>
       <div className={styles.audio}>
