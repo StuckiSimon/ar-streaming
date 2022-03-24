@@ -4,7 +4,6 @@ function VideoView({ videoRef }) {
   return (
     <video
       ref={videoRef}
-      id="remoteVideo"
       playsInline
       autoPlay
       muted
