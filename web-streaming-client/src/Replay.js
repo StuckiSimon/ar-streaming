@@ -40,7 +40,7 @@ function Replay() {
   const audioRef = useRef(null);
   useEffect(() => {
     // Create WebSocket connection.
-    const socket = new WebSocket("ws://localhost:8080");
+    const socket = new WebSocket(process.env.REACT_APP_SIGNALLING_SERVER_URL);
     // Connection opened
     socket.addEventListener("open", () => {
       console.log("opened connection to signalling server");

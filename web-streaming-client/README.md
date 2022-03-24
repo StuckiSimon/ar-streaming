@@ -2,7 +2,9 @@
 
 Streaming client consuming strems provided by iOS app.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Setup
+
+Add `.env.local` and configure `REACT_APP_SIGNALLING_SERVER_URL` to point to the signalling server instance.
 
 ## Available Scripts
 
