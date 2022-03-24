@@ -34,7 +34,6 @@ const p2pMachine = createMachine({
 
 function Replay() {
   const [connectionState, send] = useMachine(p2pMachine);
-  console.log(connectionState);
 
   const [depthData, setDepthData] = useState(null);
   const videoRef = useRef(null);
