@@ -1,4 +1,4 @@
-import Replay from "./Replay";
+import Replay from "./components/Replay";
 
 function App() {
   return <Replay />;
