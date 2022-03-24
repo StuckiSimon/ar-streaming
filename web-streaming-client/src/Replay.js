@@ -1,10 +1,41 @@
+import { useMachine } from "@xstate/react";
 import { useEffect, useRef, useState } from "react";
+import { createMachine } from "xstate";
 import AudioPlayer from "./AudioPlayer";
 import DepthView from "./DepthView";
 import styles from "./Replay.module.scss";
+import StatusInfo from "./StatusInfo";
 import VideoView from "./VideoView";
 
+const p2pMachine = createMachine({
+  id: "p2pMachine",
+  initial: "signalPending",
+  states: {
+    signalPending: {
+      on: {
+        ESTABLISHED: { target: "signalWaiting" },
+        ERROR: { target: "failed" },
+      },
+    },
+    signalWaiting: {
+      on: {
+        ESTABLISHED: { target: "p2pEstablished" },
+        ERROR: { target: "failed" },
+      },
+    },
+    p2pEstablished: {
+      on: {
+        ERROR: { target: "failed" },
+      },
+    },
+    failed: {},
+  },
+});
+
 function Replay() {
+  const [connectionState, send] = useMachine(p2pMachine);
+  console.log(connectionState);
+
   const [depthData, setDepthData] = useState(null);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
@@ -14,6 +45,7 @@ function Replay() {
     // Connection opened
     socket.addEventListener("open", () => {
       console.log("opened connection to signalling server");
+      send("ESTABLISHED");
     });
 
     const configuration = {};
@@ -44,10 +76,15 @@ function Replay() {
         );
       }
     });
-    peerConnection.addEventListener("iceconnectionstatechange", (e) =>
-      console.log("ice change", peerConnection.iceConnectionState)
-    );
+    peerConnection.addEventListener("iceconnectionstatechange", (e) => {
+      console.log("ice change", peerConnection.iceConnectionState);
+      if (peerConnection.iceConnectionState === "disconnected") {
+        console.log("disconnected now, send error");
+        send("ERROR");
+      }
+    });
     peerConnection.addEventListener("track", (e) => {
+      send("ESTABLISHED");
       switch (e.track.kind) {
         case "video":
           videoRef.current.srcObject = e.streams[0];
@@ -64,7 +101,7 @@ function Replay() {
     });
 
     peerConnection.addEventListener("datachannel", (e) => {
-      console.info("got a data channel", e, e.channel.addEventListener);
+      console.info("got a data channel", e);
       const channel = e.channel;
       channel.addEventListener("open", () => {
         console.log("data channel opened");
@@ -114,20 +151,23 @@ function Replay() {
         }
       })();
     });
-  }, []);
+  }, [send]);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.video}>
-        <VideoView videoRef={videoRef} />
+    <>
+      <StatusInfo state={connectionState.value} />
+      <div className={styles.container}>
+        <div className={styles.video}>
+          <VideoView videoRef={videoRef} />
+        </div>
+        <div className={styles.depthMap}>
+          <DepthView depthData={depthData} />
+        </div>
+        <div className={styles.audio}>
+          <AudioPlayer audioRef={audioRef} />
+        </div>
       </div>
-      <div className={styles.depthMap}>
-        <DepthView depthData={depthData} />
-      </div>
-      <div className={styles.audio}>
-        <AudioPlayer audioRef={audioRef} />
-      </div>
-    </div>
+    </>
   );
 }
 
