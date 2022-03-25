@@ -40,6 +40,17 @@ class ViewController: UIViewController {
         self.arReceiver = ARReceiver()
         self.arReceiver.delegate = self
         arView.session = self.arReceiver.session()
+        
+        arView.environment.sceneUnderstanding.options = []
+        
+        // Turn on occlusion from the scene reconstruction's mesh.
+        arView.environment.sceneUnderstanding.options.insert(.occlusion)
+
+        // Display a debug visualization of the mesh.
+        arView.debugOptions.insert(.showSceneUnderstanding)
+        
+        // For performance, disable render options that are not required for this app.
+        arView.renderOptions = [.disablePersonOcclusion, .disableDepthOfField, .disableMotionBlur]
     }
 }
 
@@ -108,5 +119,9 @@ extension ViewController: WebRTCClientDelegate {
 extension ViewController: ARDataReceiver {
     func onNewDepthMap(depthMap: RTCDataBuffer) {
         self.webRTCClient.sendDepthMapData(depthMap: depthMap)
+    }
+    func onNewMesh(mesh: RTCDataBuffer) {
+        // TODO: refactor to use separate webRTCClient method for different data
+        self.webRTCClient.sendDepthMapData(depthMap: mesh)
     }
 }

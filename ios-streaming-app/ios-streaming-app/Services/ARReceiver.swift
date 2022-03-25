@@ -13,6 +13,7 @@ import WebRTC
 // Receive the newest AR data from an `ARReceiver`.
 protocol ARDataReceiver: AnyObject {
     func onNewDepthMap(depthMap: RTCDataBuffer)
+    func onNewMesh(mesh: RTCDataBuffer)
 }
 
 // Configure and run an AR session to provide the app with depth-related AR data.
@@ -21,7 +22,7 @@ final class ARReceiver: NSObject, ARSessionDelegate {
     
     private var arSession = ARSession()
     private var sampleCounter = 0
-    private let sampleSkipRate = 60 // how many samples to skip
+    private let sampleSkipRate = 180 // how many samples to skip
     
     // Configure and start the ARSession.
     override init() {
@@ -40,6 +41,7 @@ final class ARReceiver: NSObject, ARSessionDelegate {
         // Enable both the `sceneDepth` and `smoothedSceneDepth` frame semantics.
         let config = ARWorldTrackingConfiguration()
         config.frameSemantics = [.sceneDepth, .smoothedSceneDepth]
+        config.sceneReconstruction = .meshWithClassification
         arSession.run(config)
     }
     
@@ -48,17 +50,55 @@ final class ARReceiver: NSObject, ARSessionDelegate {
     }
   
     // Send required data from `ARFrame` to the delegate class via the `onNewDepthMap` callback.
-    func session(_ session: ARSession, didUpdate frame: ARFrame) {
+    func session(_: ARSession, didUpdate frame: ARFrame) {
         if self.sampleCounter < self.sampleSkipRate {
             self.sampleCounter += 1
             return
         }
         self.sampleCounter = 0
+        
+        if (frame.anchors.count > 0) {
+            var obj = ""
+            var anchorVertexCounter = 0
+            for arAnchor in frame.anchors {
+                let anchor = arAnchor as! ARMeshAnchor
+                
+                obj += "g group" + String(anchorVertexCounter) + "\n"
+                
+                for vertexIndex in 0...anchor.geometry.vertices.count {
+                    let vertex = anchor.geometry.vertex(at: UInt32(vertexIndex))
+                    obj += "v" + " "
+                    obj += String(vertex[0]) + " "
+                    obj += String(vertex[1]) + " "
+                    obj += String(vertex[2]) + "\n"
+                }
+                for faceIndex in 0...anchor.geometry.faces.count {
+                    let vertexIndices = anchor.geometry.vertexIndicesOf(faceWithIndex: faceIndex)
+                    obj += "f" + " "
+                    obj += String(anchorVertexCounter + vertexIndices[0] + 1) + " "
+                    obj += String(anchorVertexCounter + vertexIndices[1] + 1) + " "
+                    obj += String(anchorVertexCounter + vertexIndices[2] + 1) + "\n"
+                }
+                anchorVertexCounter += anchor.geometry.vertices.count + 1
+            }
+            
+            let messageData = NSMutableData()
+            messageData.append("MS".data(using: .ascii)!)
+            messageData.append(obj.data(using: .utf8)!)
+            
+            let buffer = RTCDataBuffer(data: messageData as Data, isBinary: true)
+            delegate?.onNewMesh(mesh: buffer)
+        }
 
         if frame.sceneDepth != nil {
             let pixelBuffer = frame.sceneDepth!.depthMap
             let data = WebRTCClient.createDataFromPixelBuffer(pixelBuffer: pixelBuffer)
-            let buffer = RTCDataBuffer(data: data, isBinary: true)
+            
+            let messageData = NSMutableData()
+            messageData.append("DM".data(using: .ascii)!)
+            messageData.append(data)
+            
+            let buffer = RTCDataBuffer(data: messageData as Data, isBinary: true)
             delegate?.onNewDepthMap(depthMap: buffer)
         }
     }

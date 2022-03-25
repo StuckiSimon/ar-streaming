@@ -1,5 +1,8 @@
 import { useMachine } from "@xstate/react";
-import { useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLogger } from "../core/logger";
 import p2pMachine from "../core/p2pMachine";
 import AudioPlayer from "./AudioPlayer";
@@ -14,6 +17,7 @@ function Replay() {
   const logger = useLogger();
 
   const [depthData, setDepthData] = useState(null);
+  const [threeObj, setThreeObj] = useState(null);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
   useEffect(() => {
@@ -99,7 +103,24 @@ function Replay() {
       });
       channel.addEventListener("message", (e) => {
         window.depthData = e.data;
-        setDepthData(Array.from(new Float32Array(e.data)));
+        const meta = new Uint8Array(e.data.slice(0, 2));
+        const messageType = String.fromCharCode(meta[0], meta[1]);
+        switch (messageType) {
+          case "DM":
+            // DepthMap
+            setDepthData(Array.from(new Float32Array(e.data.slice(2))));
+            break;
+          case "MS":
+            // Mesh
+            const decoder = new TextDecoder("ascii");
+            const rawObjString = decoder.decode(e.data.slice(2));
+            const loader = new OBJLoader();
+            const parsedObject = loader.parse(rawObjString);
+            setThreeObj(parsedObject);
+            break;
+          default:
+            logger.error("unknown message type", messageType);
+        }
       });
       channel.addEventListener("error", (e) => {
         logger.error("data channel error", e);
@@ -149,6 +170,12 @@ function Replay() {
           <VideoView videoRef={videoRef} />
         </div>
         <div className={styles.depthMap}>
+          <Canvas style={{ height: "40vh" }}>
+            <Suspense fallback={null}>
+              {threeObj ? <primitive object={threeObj} /> : null}
+              <OrbitControls />
+            </Suspense>
+          </Canvas>
           <DepthView depthData={depthData} />
         </div>
         <div className={styles.footer}>
