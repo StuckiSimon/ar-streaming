@@ -2,6 +2,7 @@
   "name": "web-streaming-client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://stuckisimon.github.io/ar-streaming",
   "dependencies": {
     "@react-three/drei": "^8.19.2",
     "@react-three/fiber": "^7.0.26",
