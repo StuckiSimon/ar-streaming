@@ -8,7 +8,7 @@
 import Foundation
 
 struct Config {
-    let signallingServerUrl: URL = URL(string: "ws://192.168.0.201:8080")!
+    let signallingServerUrl: URL = URL(string: "ws://vt1-signalling-server.herokuapp.com")!
     
     static let standard: Config = Config()
 }
