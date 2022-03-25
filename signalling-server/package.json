@@ -6,7 +6,8 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "cd .. && git subtree push --prefix signalling-server heroku main"
   },
   "dependencies": {
     "ws": "^8.5.0"
