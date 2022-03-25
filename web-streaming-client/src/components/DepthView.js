@@ -225,9 +225,9 @@ function renderFastCanvas(depthData, min, max) {
 function DepthView({
   depthData = JSON.parse(localStorage.getItem("depthData")).data,
 }) {
-  const strategy = useRenderStrategy();
-  console.log(strategy);
   const logger = useLogger();
+  const strategy = useRenderStrategy();
+  logger.debug("active rendering strategy", strategy);
   useEffect(() => {
     if (!depthData) {
       return;
