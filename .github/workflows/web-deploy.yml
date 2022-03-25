@@ -17,6 +17,7 @@ jobs:
 
       - name: Install and Build 🔧
         run: |
+          cd web-streaming-client
           npm ci
           npm run build
       - name: Deploy 🚀
