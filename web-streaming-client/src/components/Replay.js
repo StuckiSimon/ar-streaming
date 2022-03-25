@@ -151,7 +151,7 @@ function Replay() {
         <div className={styles.depthMap}>
           <DepthView depthData={depthData} />
         </div>
-        <div className={styles.audio}>
+        <div className={styles.footer}>
           <AudioPlayer audioRef={audioRef} />
           <RenderStrategyChooser />
         </div>
