@@ -118,8 +118,25 @@ final class WebRTCClient: NSObject {
         return Data(bytesNoCopy: rawFrame, count: totalSize, deallocator: .free)
     }
 
-    func sendDepthMapData(depthMap: RTCDataBuffer) {
-        self.localDataChannel?.sendData(depthMap)
+    // MARK: Data channel
+    func sendDepthMapData(depthMap: CVPixelBuffer) {
+        let data = WebRTCClient.createDataFromPixelBuffer(pixelBuffer: depthMap)
+        
+        let messageData = NSMutableData()
+        messageData.append("DM".data(using: .ascii)!)
+        messageData.append(data)
+        
+        let buffer = RTCDataBuffer(data: messageData as Data, isBinary: true)
+        self.localDataChannel?.sendData(buffer)
+    }
+    
+    func sendMeshData(mesh: String) {
+        let messageData = NSMutableData()
+        messageData.append("MS".data(using: .ascii)!)
+        messageData.append(mesh.data(using: .utf8)!)
+        
+        let buffer = RTCDataBuffer(data: messageData as Data, isBinary: true)
+        self.localDataChannel?.sendData(buffer)
     }
     
     // MARK: Media

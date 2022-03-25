@@ -117,11 +117,10 @@ extension ViewController: WebRTCClientDelegate {
 }
 
 extension ViewController: ARDataReceiver {
-    func onNewDepthMap(depthMap: RTCDataBuffer) {
+    func onNewDepthMap(depthMap: CVPixelBuffer) {
         self.webRTCClient.sendDepthMapData(depthMap: depthMap)
     }
-    func onNewMesh(mesh: RTCDataBuffer) {
-        // TODO: refactor to use separate webRTCClient method for different data
-        self.webRTCClient.sendDepthMapData(depthMap: mesh)
+    func onNewMesh(mesh: String) {
+        self.webRTCClient.sendMeshData(mesh: mesh)
     }
 }
