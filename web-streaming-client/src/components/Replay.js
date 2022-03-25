@@ -4,6 +4,7 @@ import { useLogger } from "../core/logger";
 import p2pMachine from "../core/p2pMachine";
 import AudioPlayer from "./AudioPlayer";
 import DepthView from "./DepthView";
+import { RenderStrategyChooser } from "./RenderStrategy";
 import styles from "./Replay.module.scss";
 import StatusInfo from "./StatusInfo";
 import VideoView from "./VideoView";
@@ -152,6 +153,7 @@ function Replay() {
         </div>
         <div className={styles.audio}>
           <AudioPlayer audioRef={audioRef} />
+          <RenderStrategyChooser />
         </div>
       </div>
     </>
