@@ -35,7 +35,7 @@ export function RenderStrategyChooser() {
   const { value, setValue } = useRenderStrategyContext();
   return (
     <label>
-      Render strategy
+      Render strategy{" "}
       <select
         value={value}
         onChange={(e) => {
