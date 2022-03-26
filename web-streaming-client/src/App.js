@@ -1,12 +1,12 @@
 import { RenderStrategyProvider } from "./components/RenderStrategy";
-import Replay from "./components/Replay";
+import Stream from "./components/Stream/Stream";
 import { LOG_LEVEL_INFO, LogLevelContext } from "./core/logger";
 
 function App() {
   return (
     <LogLevelContext.Provider value={LOG_LEVEL_INFO}>
       <RenderStrategyProvider>
-        <Replay />
+        <Stream />
       </RenderStrategyProvider>
     </LogLevelContext.Provider>
   );
