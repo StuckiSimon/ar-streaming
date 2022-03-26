@@ -1,6 +1,14 @@
 import { useEffect, useRef } from "react";
 import { useLogger } from "../../core/logger";
 
+const STUN_SERVERS = [
+  "stun:stun.l.google.com:19302",
+  "stun:stun1.l.google.com:19302",
+  "stun:stun2.l.google.com:19302",
+  "stun:stun3.l.google.com:19302",
+  "stun:stun4.l.google.com:19302",
+];
+
 function usePeerConnection(socketRef, send, setDepthData, setObjString) {
   const logger = useLogger();
   const peerConnectionRef = useRef(null);
@@ -10,13 +18,7 @@ function usePeerConnection(socketRef, send, setDepthData, setObjString) {
     const configuration = {
       iceServers: [
         {
-          urls: [
-            "stun:stun.l.google.com:19302",
-            "stun:stun1.l.google.com:19302",
-            "stun:stun2.l.google.com:19302",
-            "stun:stun3.l.google.com:19302",
-            "stun:stun4.l.google.com:19302",
-          ],
+          urls: STUN_SERVERS,
         },
       ],
     };
