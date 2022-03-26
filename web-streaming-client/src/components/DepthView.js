@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLogger } from "../core/logger";
 import {
   RENDER_CANVAS_OPTIMIZED,
@@ -34,8 +34,7 @@ function createProgram(gl, vertexShader, fragmentShader) {
   gl.deleteProgram(program);
 }
 
-function renderWebGL(depthData, min, max) {
-  const canvas = document.querySelector("#glCanvas");
+function renderWebGL(canvas, depthData, min, max) {
   // Initialize the GL context
   const gl = canvas.getContext("webgl2");
 
@@ -53,50 +52,20 @@ function renderWebGL(depthData, min, max) {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   const vertexShaderSource = `
-    // an attribute will receive data from a buffer
-    //attribute vec4 a_position;
-   
-    // all shaders have a main function
-    //void main() {
-   
-      // gl_Position is a special variable a vertex shader
-      // is responsible for setting
-      //gl_Position = a_position;
-    //}
     attribute vec4 a_position;
-    // attribute vec2 a_texcoord;
-     
-    // uniform mat4 u_matrix;
-     
-    // varying vec2 v_texcoord;
      
     void main() {
-       //gl_Position = u_matrix * a_position;
        gl_Position = a_position;
-       //v_texcoord = a_texcoord;
     }
-    
     `;
   const fragmentShaderSource = `
-    // fragment shaders don't have a default precision so we need
-    // to pick one. mediump is a good default
     precision mediump float;
 
-    //varying vec2 v_texcoord;
-
     uniform sampler2D u_texture;
-    //uniform float
    
     void main() {
-      // gl_FragColor is a special variable a fragment shader
-      // is responsible for setting
-      //float shit = texture2D(u_texture, vec2(0, 0)).r;
-      //float merde = 0.0;
-      //gl_FragColor = vec4(shit);
-      // gl_FragColor = vec4(merde + shit, 0, 0.5, 1);
       vec4 pos = gl_FragCoord;
       float depth = texture2D(u_texture, vec2(pos.x/256.0, pos.y/192.0)).r;
-      //gl_FragColor = vec4(pos.x/256.0, pos.y/192.0, depth, 1);
       gl_FragColor = vec4(0, 0, depth, 1);
     }
     `;
@@ -172,7 +141,6 @@ function renderWebGL(depthData, min, max) {
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
   gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  // gl.bindTexture(gl.TEXTURE_2D, tex);
 
   gl.bindTexture(gl.TEXTURE_2D, tex);
 
@@ -186,8 +154,7 @@ function renderWebGL(depthData, min, max) {
   gl.drawArrays(primitiveType, drawOffset, count);
 }
 
-function renderSlowCanvas(depthData, min, max) {
-  const canvas = document.querySelector("#glCanvas");
+function renderSlowCanvas(canvas, depthData, min, max) {
   const context = canvas.getContext("2d");
   const id = context.createImageData(1, 1);
   const d = id.data;
@@ -204,8 +171,7 @@ function renderSlowCanvas(depthData, min, max) {
   }
 }
 
-function renderFastCanvas(depthData, min, max) {
-  const canvas = document.querySelector("#glCanvas");
+function renderFastCanvas(canvas, depthData, min, max) {
   const context = canvas.getContext("2d");
   const id = context.createImageData(256, 192);
   const d = id.data;
@@ -227,13 +193,12 @@ function DepthView({
 }) {
   const logger = useLogger();
   const strategy = useRenderStrategy();
+  const canvasRef = useRef(null);
   logger.debug("active rendering strategy", strategy);
   useEffect(() => {
     if (!depthData) {
       return;
     }
-    logger.debug("start painting");
-    performance.mark("startPaint");
     const max = depthData.reduce(
       (max, curr) => (max > curr ? max : curr),
       -Infinity
@@ -242,17 +207,18 @@ function DepthView({
       (min, curr) => (min < curr ? min : curr),
       Infinity
     );
-    logger.debug(max, min);
+    logger.debug("start painting", min, max);
+    performance.mark("startPaint");
 
     switch (strategy) {
       case RENDER_CANVAS_OPTIMIZED:
-        renderFastCanvas(depthData, min, max);
+        renderFastCanvas(canvasRef.current, depthData, min, max);
         break;
       case RENDER_CANVAS_SLOW:
-        renderSlowCanvas(depthData, min, max);
+        renderSlowCanvas(canvasRef.current, depthData, min, max);
         break;
       case RENDER_WEBGL:
-        renderWebGL(depthData, min, max);
+        renderWebGL(canvasRef.current, depthData, min, max);
         break;
       default:
         logger.error(`unknown strategy provided ${strategy}`);
@@ -268,7 +234,7 @@ function DepthView({
   }, [depthData, logger, strategy]);
   // pass strategy as key to ensure creating new canvas instances on strategy change
   return (
-    <canvas key={strategy} id="glCanvas" width="256" height="192"></canvas>
+    <canvas key={strategy} ref={canvasRef} width="256" height="192"></canvas>
   );
 }
 
