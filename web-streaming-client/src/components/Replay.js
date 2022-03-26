@@ -10,16 +10,13 @@ import VideoView from "./VideoView";
 import SceneReconstruction from "./SceneReconstruction";
 import styles from "./Replay.module.scss";
 
-function usePeerConnection(
-  socketRef,
-  videoRef,
-  audioRef,
-  send,
-  setDepthData,
-  setObjString
-) {
+const SIGNALLING_SERVER_URL = process.env.REACT_APP_SIGNALLING_SERVER_URL;
+
+function usePeerConnection(socketRef, send, setDepthData, setObjString) {
   const logger = useLogger();
   const peerConnectionRef = useRef(null);
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
   useEffect(() => {
     const configuration = {
       iceServers: [
@@ -86,7 +83,7 @@ function usePeerConnection(
     });
 
     peerConnection.addEventListener("datachannel", (e) => {
-      logger.log("got a data channel", e);
+      logger.log("received data channel");
       const channel = e.channel;
       channel.addEventListener("open", () => {
         logger.log("data channel opened");
@@ -95,7 +92,6 @@ function usePeerConnection(
         logger.log("data channel closed");
       });
       channel.addEventListener("message", (e) => {
-        window.depthData = e.data;
         const meta = new Uint8Array(e.data.slice(0, 2));
         const messageType = String.fromCharCode(meta[0], meta[1]);
         switch (messageType) {
@@ -117,15 +113,15 @@ function usePeerConnection(
         logger.error("data channel error", e);
       });
     });
-  }, [audioRef, videoRef, logger, send, setDepthData, setObjString, socketRef]);
-  return peerConnectionRef;
+  }, [logger, send, setDepthData, setObjString, socketRef]);
+  return { peerConnectionRef, audioRef, videoRef };
 }
 
 function useSocket(socketRef, peerConnectionRef, send) {
   const logger = useLogger();
   useEffect(() => {
     // Create WebSocket connection.
-    const socket = new WebSocket(process.env.REACT_APP_SIGNALLING_SERVER_URL);
+    const socket = new WebSocket(SIGNALLING_SERVER_URL);
     socketRef.current = socket;
     // Connection opened
     socket.addEventListener("open", () => {
@@ -173,13 +169,9 @@ function Replay() {
 
   const [depthData, setDepthData] = useState(null);
   const [objString, setObjString] = useState(null);
-  const videoRef = useRef(null);
-  const audioRef = useRef(null);
   const socketRef = useRef(null);
-  const peerConnectionRef = usePeerConnection(
+  const { peerConnectionRef, videoRef, audioRef } = usePeerConnection(
     socketRef,
-    videoRef,
-    audioRef,
     send,
     setDepthData,
     setObjString
