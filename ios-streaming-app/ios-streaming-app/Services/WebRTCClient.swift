@@ -140,36 +140,7 @@ final class WebRTCClient: NSObject {
     }
     
     // MARK: Media
-    func startCaptureLocalVideo(/*renderer: RTCVideoRenderer*/) {
-        /*
-        guard let capturer = self.videoCapturer as? RTCCameraVideoCapturer else {
-            return
-        }
-
-        guard
-            let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }),
-        
-            // choose highest res
-            let format = (RTCCameraVideoCapturer.supportedFormats(for: frontCamera).sorted { (f1, f2) -> Bool in
-                let width1 = CMVideoFormatDescriptionGetDimensions(f1.formatDescription).width
-                let width2 = CMVideoFormatDescriptionGetDimensions(f2.formatDescription).width
-                return width1 < width2
-            }).last,
-        
-            // choose highest fps
-            let fps = (format.videoSupportedFrameRateRanges.sorted { return $0.maxFrameRate < $1.maxFrameRate }.last) else {
-            return
-        }*/
-        
-        // let source = WebRTCClient.factory.videoSource()
-        
-        /**
-         let videoSource = factory.videoSource()
-                     let videoTrack = factory.videoTrack(with: videoSource, trackId: UUID().uuidString)
-                     videoTrack.isEnabled = true;
-                     let capturer = RTCVideoCapturer(delegate: videoSource)
-                     localStream.addVideoTrack(videoTrack)
-         */
+    func startCaptureLocalVideo() {
         
         let source = self.localVideoTrack!.source
         
@@ -197,22 +168,8 @@ final class WebRTCClient: NSObject {
                     CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer)) * Float64(NSEC_PER_SEC)
                 let videoFrame =  RTCVideoFrame(buffer: rtcPixelBuffer, rotation: RTCVideoRotation._0, timeStampNs: Int64(timeStampNs))
                 source.capturer(self.videoCapturer!, didCapture: videoFrame)
-                //renderer.renderFrame(videoFrame)
-                /*guard let currentFrame = arView.session.currentFrame else { return }
-                videoProcessor.compressAndSend(sampleBuffer, arFrame: currentFrame) {
-                    (data) in
-                    multipeerSession.sendToAllPeers(data, reliably: true)
-                }*/
             }
         }
-        
-        /*capturer.startCapture(with: RPScreenRecorder., format: <#T##AVCaptureDevice.Format#>, fps: <#T##Int#>, completionHandler: <#T##((Error?) -> Void)?##((Error?) -> Void)?##(Error?) -> Void#>)*/
-
-        /*capturer.startCapture(with: frontCamera,
-                              format: format,
-                              fps: Int(fps.maxFrameRate))*/
-        
-        //self.localVideoTrack?.add(renderer)
     }
     
     func renderRemoteVideo(to renderer: RTCVideoRenderer) {
