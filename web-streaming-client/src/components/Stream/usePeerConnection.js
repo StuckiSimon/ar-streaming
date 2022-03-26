@@ -9,6 +9,33 @@ const STUN_SERVERS = [
   "stun:stun4.l.google.com:19302",
 ];
 
+function addIceCandidate(socket, e) {
+  // When there are no more candidates at all to be expected during the current negotiation exchange
+  // an end - of - candidates notification is sent by delivering a RTCIceCandidate whose candidate
+  // property is null. This message does not need to be sent to the remote peer.
+  // It's a legacy notification of a state which can be detected instead by watching for the
+  // iceGatheringState to change to complete, by watching for the icegatheringstatechange event.
+  if (e.candidate) {
+    // sdp, sdpMLineIndex, sdpMid
+    const { candidate, sdpMLineIndex, sdpMid } = e.candidate;
+    socket.send(
+      new Blob(
+        [
+          JSON.stringify({
+            type: "IceCandidate",
+            payload: {
+              sdp: candidate,
+              sdpMLineIndex,
+              sdpMid,
+            },
+          }),
+        ],
+        { type: "application/json" }
+      )
+    );
+  }
+}
+
 function usePeerConnection(socketRef, send, setDepthData, setObjString) {
   const logger = useLogger();
   const peerConnectionRef = useRef(null);
@@ -25,30 +52,7 @@ function usePeerConnection(socketRef, send, setDepthData, setObjString) {
     const peerConnection = new RTCPeerConnection(configuration);
     peerConnectionRef.current = peerConnection;
     peerConnection.addEventListener("icecandidate", (e) => {
-      // When there are no more candidates at all to be expected during the current negotiation exchange
-      // an end - of - candidates notification is sent by delivering a RTCIceCandidate whose candidate
-      // property is null. This message does not need to be sent to the remote peer.
-      // It's a legacy notification of a state which can be detected instead by watching for the
-      // iceGatheringState to change to complete, by watching for the icegatheringstatechange event.
-      if (e.candidate) {
-        // sdp, sdpMLineIndex, sdpMid
-        const { candidate, sdpMLineIndex, sdpMid } = e.candidate;
-        socketRef.current.send(
-          new Blob(
-            [
-              JSON.stringify({
-                type: "IceCandidate",
-                payload: {
-                  sdp: candidate,
-                  sdpMLineIndex,
-                  sdpMid,
-                },
-              }),
-            ],
-            { type: "application/json" }
-          )
-        );
-      }
+      addIceCandidate(socketRef.current, e);
     });
     peerConnection.addEventListener("iceconnectionstatechange", (e) => {
       logger.log("ice change", peerConnection.iceConnectionState);
@@ -92,7 +96,7 @@ function usePeerConnection(socketRef, send, setDepthData, setObjString) {
             break;
           case "MS":
             // Mesh
-            const decoder = new TextDecoder("ascii");
+            const decoder = new TextDecoder();
             const rawObjString = decoder.decode(e.data.slice(2));
             setObjString(rawObjString);
             break;
