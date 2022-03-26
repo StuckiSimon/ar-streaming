@@ -10,23 +10,17 @@ import VideoView from "./VideoView";
 import SceneReconstruction from "./SceneReconstruction";
 import styles from "./Replay.module.scss";
 
-function Replay() {
-  const [connectionState, send] = useMachine(p2pMachine);
+function usePeerConnection(
+  socketRef,
+  videoRef,
+  audioRef,
+  send,
+  setDepthData,
+  setObjString
+) {
   const logger = useLogger();
-
-  const [depthData, setDepthData] = useState(null);
-  const [objString, setObjString] = useState(null);
-  const videoRef = useRef(null);
-  const audioRef = useRef(null);
+  const peerConnectionRef = useRef(null);
   useEffect(() => {
-    // Create WebSocket connection.
-    const socket = new WebSocket(process.env.REACT_APP_SIGNALLING_SERVER_URL);
-    // Connection opened
-    socket.addEventListener("open", () => {
-      logger.log("opened connection to signalling server");
-      send("ESTABLISHED");
-    });
-
     const configuration = {
       iceServers: [
         {
@@ -41,6 +35,7 @@ function Replay() {
       ],
     };
     const peerConnection = new RTCPeerConnection(configuration);
+    peerConnectionRef.current = peerConnection;
     peerConnection.addEventListener("icecandidate", (e) => {
       // When there are no more candidates at all to be expected during the current negotiation exchange
       // an end - of - candidates notification is sent by delivering a RTCIceCandidate whose candidate
@@ -50,7 +45,7 @@ function Replay() {
       if (e.candidate) {
         // sdp, sdpMLineIndex, sdpMid
         const { candidate, sdpMLineIndex, sdpMid } = e.candidate;
-        socket.send(
+        socketRef.current.send(
           new Blob(
             [
               JSON.stringify({
@@ -122,8 +117,22 @@ function Replay() {
         logger.error("data channel error", e);
       });
     });
+  }, [audioRef, videoRef, logger, send, setDepthData, setObjString, socketRef]);
+  return peerConnectionRef;
+}
 
-    logger.log("peerConnection setRemoteDescription start");
+function useSocket(socketRef, peerConnectionRef, send) {
+  const logger = useLogger();
+  useEffect(() => {
+    // Create WebSocket connection.
+    const socket = new WebSocket(process.env.REACT_APP_SIGNALLING_SERVER_URL);
+    socketRef.current = socket;
+    // Connection opened
+    socket.addEventListener("open", () => {
+      logger.log("opened connection to signalling server");
+      send("ESTABLISHED");
+    });
+
     // Listen for messages
     socket.addEventListener("message", function (event) {
       (async () => {
@@ -132,10 +141,10 @@ function Replay() {
 
         if (json.payload.type === "offer") {
           logger.log("apply remote session description");
-          await peerConnection.setRemoteDescription(json.payload);
+          await peerConnectionRef.current.setRemoteDescription(json.payload);
           try {
-            const answer = await peerConnection.createAnswer();
-            await peerConnection.setLocalDescription(answer);
+            const answer = await peerConnectionRef.current.createAnswer();
+            await peerConnectionRef.current.setLocalDescription(answer);
             socket.send(
               new Blob(
                 [
@@ -152,11 +161,30 @@ function Replay() {
           }
         } else {
           // ice candidate
-          peerConnection.addIceCandidate(json.payload);
+          peerConnectionRef.current.addIceCandidate(json.payload);
         }
       })();
     });
-  }, [send, logger, setObjString]);
+  }, [send, logger, peerConnectionRef, socketRef]);
+}
+
+function Replay() {
+  const [connectionState, send] = useMachine(p2pMachine);
+
+  const [depthData, setDepthData] = useState(null);
+  const [objString, setObjString] = useState(null);
+  const videoRef = useRef(null);
+  const audioRef = useRef(null);
+  const socketRef = useRef(null);
+  const peerConnectionRef = usePeerConnection(
+    socketRef,
+    videoRef,
+    audioRef,
+    send,
+    setDepthData,
+    setObjString
+  );
+  useSocket(socketRef, peerConnectionRef, send);
 
   return (
     <>
