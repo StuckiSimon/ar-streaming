@@ -188,6 +188,12 @@ function renderFastCanvas(canvas, depthData, min, max) {
   context.putImageData(id, 0, 0);
 }
 
+const STRATEGY_RENDER_MAP = {
+  [RENDER_CANVAS_OPTIMIZED]: renderFastCanvas,
+  [RENDER_CANVAS_SLOW]: renderSlowCanvas,
+  [RENDER_WEBGL]: renderWebGL,
+};
+
 function DepthView({
   depthData = JSON.parse(localStorage.getItem("depthData")).data,
 }) {
@@ -210,18 +216,11 @@ function DepthView({
     logger.debug("start painting", min, max);
     performance.mark("startPaint");
 
-    switch (strategy) {
-      case RENDER_CANVAS_OPTIMIZED:
-        renderFastCanvas(canvasRef.current, depthData, min, max);
-        break;
-      case RENDER_CANVAS_SLOW:
-        renderSlowCanvas(canvasRef.current, depthData, min, max);
-        break;
-      case RENDER_WEBGL:
-        renderWebGL(canvasRef.current, depthData, min, max);
-        break;
-      default:
-        logger.error(`unknown strategy provided ${strategy}`);
+    const renderer = STRATEGY_RENDER_MAP[strategy];
+    if (renderer) {
+      renderer(canvasRef.current, depthData, min, max);
+    } else {
+      logger.error(`unknown strategy provided ${strategy}`);
     }
 
     performance.mark("endPaint");
