@@ -1,6 +1,6 @@
 # Signalling Server
 
-Node.js based signalling server.
+Node.js based signalling server. The signalling server broadcasts to all clients.
 
 ## Dev
 
@@ -8,7 +8,7 @@ Node.js based signalling server.
 
 ## Deploy
 
-The signalling server is deployed on heroku.
+The signalling server is deployed on heroku (`wss://vt1-signalling-server.herokuapp.com`).
 
 To setup heroku once locally, the remote has to be configured using:
 
