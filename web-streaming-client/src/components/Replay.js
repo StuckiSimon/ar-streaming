@@ -6,7 +6,7 @@ import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
 import { useLogger } from "../core/logger";
 import p2pMachine from "../core/p2pMachine";
 import AudioPlayer from "./AudioPlayer";
-import DepthView from "./DepthView";
+import DepthView from "./DepthView/DepthView";
 import { RenderStrategyChooser } from "./RenderStrategy";
 import styles from "./Replay.module.scss";
 import StatusInfo from "./StatusInfo";
