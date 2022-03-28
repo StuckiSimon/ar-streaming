@@ -35,7 +35,7 @@ function Replay() {
         <div className={styles.video}>
           <VideoView videoRef={videoRef} />
         </div>
-        <div className={styles.depthMap}>
+        <div className={styles.panel}>
           <SceneReconstruction rawObj={objString} />
           <DepthView depthData={depthData} />
         </div>
