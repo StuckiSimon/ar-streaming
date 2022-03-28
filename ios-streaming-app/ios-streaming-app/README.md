@@ -1,6 +1,7 @@
 #  ios streaming app
 
 app to demonstrate streaming of audio, video and depth map to remote peers.
+It has been tested on a iPad Pro which has an integrated LiDAR sensor.
 
 ## Setup
 

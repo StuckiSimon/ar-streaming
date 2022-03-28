@@ -2,6 +2,7 @@
 
 Web streaming client consuming streams provided by iOS app.
 The app is based on React and uses native WebRTC browser API.
+It was tested using latest Chrome.
 
 ## Setup
 
