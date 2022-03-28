@@ -1,6 +1,7 @@
 # Web Streaming Client
 
-Streaming client consuming strems provided by iOS app.
+Web streaming client consuming streams provided by iOS app.
+The app is based on React and uses native WebRTC browser API.
 
 ## Setup
 
