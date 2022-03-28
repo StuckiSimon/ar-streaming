@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLogger } from "../../core/logger";
 
 const STUN_SERVERS = [
@@ -36,11 +36,15 @@ function addIceCandidate(socket, e) {
   }
 }
 
-function usePeerConnection(socketRef, send, setDepthData, setObjString) {
+function usePeerConnection(socketRef, send) {
   const logger = useLogger();
   const peerConnectionRef = useRef(null);
   const videoRef = useRef(null);
   const audioRef = useRef(null);
+
+  const [depthData, setDepthData] = useState(null);
+  const [objString, setObjString] = useState(null);
+
   useEffect(() => {
     const configuration = {
       iceServers: [
@@ -109,7 +113,7 @@ function usePeerConnection(socketRef, send, setDepthData, setObjString) {
       });
     });
   }, [logger, send, setDepthData, setObjString, socketRef]);
-  return { peerConnectionRef, audioRef, videoRef };
+  return { peerConnectionRef, audioRef, videoRef, depthData, objString };
 }
 
 export default usePeerConnection;

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useMachine } from "@xstate/react";
 import p2pMachine from "../../core/p2pMachine";
 import AudioPlayer from "../AudioPlayer";
@@ -11,21 +11,12 @@ import usePeerConnection from "./usePeerConnection";
 import useSignallingSocket from "./useSignallingSocket";
 import styles from "./Stream.module.scss";
 
-export const SIGNALLING_SERVER_URL =
-  process.env.REACT_APP_SIGNALLING_SERVER_URL;
-
 function Replay() {
   const [connectionState, send] = useMachine(p2pMachine);
 
-  const [depthData, setDepthData] = useState(null);
-  const [objString, setObjString] = useState(null);
   const socketRef = useRef(null);
-  const { peerConnectionRef, videoRef, audioRef } = usePeerConnection(
-    socketRef,
-    send,
-    setDepthData,
-    setObjString
-  );
+  const { peerConnectionRef, videoRef, audioRef, depthData, objString } =
+    usePeerConnection(socketRef, send);
   useSignallingSocket(socketRef, peerConnectionRef, send);
 
   return (

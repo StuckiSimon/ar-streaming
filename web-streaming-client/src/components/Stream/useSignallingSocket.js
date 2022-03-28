@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLogger } from "../../core/logger";
-import { SIGNALLING_SERVER_URL } from "./Stream";
+
+const SIGNALLING_SERVER_URL = process.env.REACT_APP_SIGNALLING_SERVER_URL;
 
 async function applyOffer(peerConnection, socket, remoteDescription) {
   await peerConnection.setRemoteDescription(remoteDescription);
