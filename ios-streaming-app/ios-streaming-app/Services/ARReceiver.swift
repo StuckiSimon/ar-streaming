@@ -71,7 +71,7 @@ final class ARReceiver: NSObject, ARSessionDelegate {
     // Convert mesh data to .obj as string
     func getMeshAsObj(anchors: [ARAnchor]) -> String {
         var obj = ""
-        var anchorVertexCounter = 0
+        var anchorVertexCounter = 1
         for arAnchor in anchors {
             let anchor = arAnchor as! ARMeshAnchor
             
@@ -87,9 +87,9 @@ final class ARReceiver: NSObject, ARSessionDelegate {
             for faceIndex in 0...anchor.geometry.faces.count {
                 let vertexIndices = anchor.geometry.vertexIndicesOf(faceWithIndex: faceIndex)
                 obj += "f" + " "
-                obj += String(anchorVertexCounter + vertexIndices[0] + 1) + " "
-                obj += String(anchorVertexCounter + vertexIndices[1] + 1) + " "
-                obj += String(anchorVertexCounter + vertexIndices[2] + 1) + "\n"
+                obj += String(anchorVertexCounter + vertexIndices[0]) + " "
+                obj += String(anchorVertexCounter + vertexIndices[1]) + " "
+                obj += String(anchorVertexCounter + vertexIndices[2]) + "\n"
             }
             anchorVertexCounter += anchor.geometry.vertices.count + 1
         }
