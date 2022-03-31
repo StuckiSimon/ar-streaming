@@ -9,6 +9,7 @@ import {
 import renderFastCanvas from "./strategies/optimizedCanvas";
 import renderSlowCanvas from "./strategies/slowCanvas";
 import renderWebGL from "./strategies/webgl";
+import styles from "./DepthView.module.scss";
 
 const STRATEGY_RENDER_MAP = {
   [RENDER_CANVAS_OPTIMIZED]: renderFastCanvas,
@@ -55,7 +56,13 @@ function DepthView({
   }, [depthData, logger, strategy]);
   // pass strategy as key to ensure creating new canvas instances on strategy change
   return (
-    <canvas key={strategy} ref={canvasRef} width="256" height="192"></canvas>
+    <canvas
+      key={strategy}
+      ref={canvasRef}
+      className={styles.root}
+      width="256"
+      height="192"
+    ></canvas>
   );
 }
 

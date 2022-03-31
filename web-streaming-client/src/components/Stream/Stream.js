@@ -21,20 +21,22 @@ function Replay() {
 
   return (
     <>
-      <StatusInfo state={connectionState.value} />
       <div className={styles.container}>
         <div className={styles.video}>
           <VideoView videoRef={videoRef} />
         </div>
-        <div className={styles.panel}>
-          <SceneReconstruction rawObj={objString} />
+        <div className={styles.depthView}>
           <DepthView depthData={depthData} />
+        </div>
+        <div className={styles.sceneReconstruction}>
+          <SceneReconstruction rawObj={objString} />
         </div>
         <div className={styles.footer}>
           <AudioPlayer audioRef={audioRef} />
           <RenderStrategyChooser />
         </div>
       </div>
+      <StatusInfo state={connectionState.value} />
     </>
   );
 }
