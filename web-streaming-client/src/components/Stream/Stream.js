@@ -7,6 +7,7 @@ import { RenderStrategyChooser } from "../RenderStrategy";
 import StatusInfo from "../StatusInfo";
 import VideoView from "../VideoView";
 import SceneReconstruction from "../SceneReconstruction";
+import PointCloudView from "../PointCloudView";
 import usePeerConnection from "./usePeerConnection";
 import useSignallingSocket from "./useSignallingSocket";
 import styles from "./Stream.module.scss";
@@ -27,6 +28,9 @@ function Replay() {
         </div>
         <div className={styles.depthView}>
           <DepthView depthData={depthData} />
+        </div>
+        <div className={styles.pointCloudView}>
+          <PointCloudView depthData={depthData} />
         </div>
         <div className={styles.sceneReconstruction}>
           <SceneReconstruction rawObj={objString} />
