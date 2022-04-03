@@ -17,9 +17,7 @@ const STRATEGY_RENDER_MAP = {
   [RENDER_WEBGL]: renderWebGL,
 };
 
-function DepthView({
-  depthData = JSON.parse(localStorage.getItem("depthData")).data,
-}) {
+function DepthView({ depthData }) {
   const logger = useLogger();
   const strategy = useRenderStrategy();
   const canvasRef = useRef(null);
@@ -28,20 +26,12 @@ function DepthView({
     if (!depthData) {
       return;
     }
-    const max = depthData.reduce(
-      (max, curr) => (max > curr ? max : curr),
-      -Infinity
-    );
-    const min = depthData.reduce(
-      (min, curr) => (min < curr ? min : curr),
-      Infinity
-    );
-    logger.debug("start painting", min, max);
+
     performance.mark("startPaint");
 
     const renderer = STRATEGY_RENDER_MAP[strategy];
     if (renderer) {
-      renderer(canvasRef.current, depthData, min, max);
+      renderer(canvasRef.current, depthData.data, depthData.min, depthData.max);
     } else {
       logger.error(`unknown strategy provided ${strategy}`);
     }

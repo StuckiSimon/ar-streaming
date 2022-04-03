@@ -10,6 +10,7 @@ import SceneReconstruction from "../SceneReconstruction";
 import PointCloudView from "../PointCloudView";
 import usePeerConnection from "./usePeerConnection";
 import useSignallingSocket from "./useSignallingSocket";
+import useDepthData from "./useDepthData";
 import styles from "./Stream.module.scss";
 
 function Replay() {
@@ -19,6 +20,7 @@ function Replay() {
   const { peerConnectionRef, videoRef, audioRef, depthData, objString } =
     usePeerConnection(socketRef, send);
   useSignallingSocket(socketRef, peerConnectionRef, send);
+  const aggregatedDepthData = useDepthData(depthData);
 
   return (
     <>
@@ -27,13 +29,13 @@ function Replay() {
           <VideoView videoRef={videoRef} />
         </div>
         <div className={styles.depthView}>
-          <DepthView depthData={depthData} />
+          <DepthView depthData={aggregatedDepthData} />
         </div>
         <div>
           <SceneReconstruction rawObj={objString} />
         </div>
         <div>
-          <PointCloudView depthData={depthData} />
+          <PointCloudView depthData={aggregatedDepthData} />
         </div>
         <div className={styles.footer}>
           <AudioPlayer audioRef={audioRef} />

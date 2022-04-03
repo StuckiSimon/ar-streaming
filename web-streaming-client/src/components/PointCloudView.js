@@ -18,7 +18,7 @@ function PointCloud({ depthData }) {
 
       const color = new THREE.Color();
 
-      depthData.forEach((depth, index) => {
+      depthData.data.forEach((depth, index) => {
         // 256 x 192
         const downScale = 5;
         const x = (index % 256) / downScale;
