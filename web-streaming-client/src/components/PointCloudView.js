@@ -27,7 +27,9 @@ function PointCloud({ depthData }) {
 
         positions.push(x, y, z);
 
-        color.setRGB(0.8, 0.2, z / 3);
+        const normalizedDepth = (depth - depthData.min) / depthData.max;
+
+        color.setRGB(0.0, 1 - normalizedDepth, 0.2);
 
         colors.push(color.r, color.g, color.b);
       });
