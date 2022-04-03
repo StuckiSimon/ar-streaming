@@ -29,11 +29,11 @@ function Replay() {
         <div className={styles.depthView}>
           <DepthView depthData={depthData} />
         </div>
-        <div className={styles.pointCloudView}>
-          <PointCloudView depthData={depthData} />
-        </div>
-        <div className={styles.sceneReconstruction}>
+        <div>
           <SceneReconstruction rawObj={objString} />
+        </div>
+        <div>
+          <PointCloudView depthData={depthData} />
         </div>
         <div className={styles.footer}>
           <AudioPlayer audioRef={audioRef} />
