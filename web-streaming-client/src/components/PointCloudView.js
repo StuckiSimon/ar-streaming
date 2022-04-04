@@ -22,7 +22,9 @@ function PointCloud({ depthData, cameraResetRef }) {
         const y = Math.floor(index / 256);
         const z = depth;
 
-        const normalizedX = (x / 255) * 2 - 1;
+        // 1.3 = scale difference between x and y (256/192)
+        // normalized = close to -1 and 1 range
+        const normalizedX = ((x / 255) * 2 - 1) * 1.3;
         const normalizedY = (y / 192) * 2 - 1;
 
         positions.push(normalizedX * -1, normalizedY * -1, z);
