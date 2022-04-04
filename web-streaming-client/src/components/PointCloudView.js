@@ -60,7 +60,7 @@ function PointCloud({ depthData }) {
   });
 
   useEffect(() => {
-    camera.position.z = -2;
+    camera.position.z = -1;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
   }, [camera]);
 
@@ -79,9 +79,11 @@ function PointCloud({ depthData }) {
 
 function PointCloudView({ depthData }) {
   return (
-    <Canvas className={styles.root}>
-      <PointCloud depthData={depthData} />
-    </Canvas>
+    <div className={styles.root}>
+      <Canvas>
+        <PointCloud depthData={depthData} />
+      </Canvas>
+    </div>
   );
 }
 
