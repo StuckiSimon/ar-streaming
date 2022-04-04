@@ -1,10 +1,10 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import { FlyControls } from "@react-three/drei";
 import styles from "./PointCloudView.module.scss";
 
-function PointCloud({ depthData }) {
+function PointCloud({ depthData, cameraResetRef }) {
   const [mesh, setMesh] = useState(null);
 
   useEffect(() => {
@@ -59,10 +59,18 @@ function PointCloud({ depthData }) {
     return camera;
   });
 
-  useEffect(() => {
-    camera.position.z = -1;
+  const resetCamera = useCallback(() => {
+    camera.position.z = -1.2;
+    camera.position.x = 0;
+    camera.position.y = 0;
     camera.lookAt(new THREE.Vector3(0, 0, 0));
   }, [camera]);
+
+  cameraResetRef.current = resetCamera;
+
+  useEffect(() => {
+    resetCamera();
+  }, [resetCamera]);
 
   return (
     <Suspense fallback={null}>
@@ -78,11 +86,23 @@ function PointCloud({ depthData }) {
 }
 
 function PointCloudView({ depthData }) {
+  const cameraResetRef = useRef(() => {});
   return (
     <div className={styles.root}>
-      <Canvas>
-        <PointCloud depthData={depthData} />
-      </Canvas>
+      <div className={styles.canvas}>
+        <Canvas>
+          <PointCloud depthData={depthData} cameraResetRef={cameraResetRef} />
+        </Canvas>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            cameraResetRef.current();
+          }}
+        >
+          Reset camera
+        </button>
+      </div>
     </div>
   );
 }
