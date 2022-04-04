@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import { FlyControls } from "@react-three/drei";
@@ -6,8 +6,6 @@ import styles from "./PointCloudView.module.scss";
 
 function PointCloud({ depthData }) {
   const [mesh, setMesh] = useState(null);
-  const cameraRef = useRef(null);
-  const counter = useRef(0);
 
   useEffect(() => {
     if (depthData) {
@@ -20,12 +18,14 @@ function PointCloud({ depthData }) {
 
       depthData.data.forEach((depth, index) => {
         // 256 x 192
-        const downScale = 5;
-        const x = (index % 256) / downScale;
-        const y = Math.floor(index / 256) / downScale;
-        const z = depth * 100;
+        const x = index % 256;
+        const y = Math.floor(index / 256);
+        const z = depth;
 
-        positions.push(x, y, z);
+        const normalizedX = (x / 255) * 2 - 1;
+        const normalizedY = (y / 192) * 2 - 1;
+
+        positions.push(normalizedX * -1, normalizedY * -1, z);
 
         const normalizedDepth = (depth - depthData.min) / depthData.max;
 
@@ -46,39 +46,23 @@ function PointCloud({ depthData }) {
       geometry.computeBoundingSphere();
 
       const material = new THREE.PointsMaterial({
-        size: 0.3,
+        size: 0.01,
         vertexColors: true,
       });
 
       const points = new THREE.Points(geometry, material);
-      counter.current++;
       setMesh(points);
     }
   }, [depthData]);
 
-  useThree(({ camera }) => {
-    cameraRef.current = camera;
+  const camera = useThree(({ camera }) => {
+    return camera;
   });
 
   useEffect(() => {
-    if (!mesh || counter.current > 1) {
-      return;
-    }
-    // look at center of plane
-    const middle = new THREE.Vector3();
-    const pointsGeometry = mesh.geometry;
-
-    pointsGeometry.computeBoundingBox();
-
-    middle.x =
-      (pointsGeometry.boundingBox.max.x + pointsGeometry.boundingBox.min.x) / 2;
-    middle.y =
-      (pointsGeometry.boundingBox.max.y + pointsGeometry.boundingBox.min.y) / 2;
-    middle.z =
-      (pointsGeometry.boundingBox.max.z + pointsGeometry.boundingBox.min.z) / 2;
-
-    cameraRef.current?.lookAt(middle);
-  }, [mesh]);
+    camera.position.z = -2;
+    camera.lookAt(new THREE.Vector3(0, 0, 0));
+  }, [camera]);
 
   return (
     <Suspense fallback={null}>
