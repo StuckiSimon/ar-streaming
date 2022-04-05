@@ -2,6 +2,8 @@ import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useThree } from "@react-three/fiber";
 import { FlyControls } from "@react-three/drei";
+import { Button, Tooltip } from "antd";
+import { CameraOutlined } from "@ant-design/icons";
 import styles from "./PointCloudView.module.scss";
 
 function PointCloud({ depthData, cameraResetRef }) {
@@ -97,13 +99,18 @@ function PointCloudView({ depthData }) {
         </Canvas>
       </div>
       <div>
-        <button
-          onClick={() => {
-            cameraResetRef.current();
-          }}
-        >
-          Reset camera
-        </button>
+        {depthData ? (
+          <Tooltip title="reset camera viewport">
+            <Button
+              type="ghost"
+              shape="circle"
+              icon={<CameraOutlined />}
+              onClick={() => {
+                cameraResetRef.current();
+              }}
+            />
+          </Tooltip>
+        ) : null}
       </div>
     </div>
   );
