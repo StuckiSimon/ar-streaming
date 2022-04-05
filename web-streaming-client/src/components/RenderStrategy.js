@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
+import { Select } from "antd";
 
 export const RENDER_CANVAS_OPTIMIZED = "RENDER_CANVAS_OPTIMIZED";
 export const RENDER_CANVAS_SLOW = "RENDER_CANVAS_SLOW";
@@ -36,16 +37,18 @@ export function RenderStrategyChooser() {
   return (
     <label>
       Render strategy{" "}
-      <select
+      <Select
         value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
+        onChange={(value) => {
+          setValue(value);
         }}
       >
-        <option value={RENDER_CANVAS_OPTIMIZED}>Canvas optimized</option>
-        <option value={RENDER_CANVAS_SLOW}>Canvas slow</option>
-        <option value={RENDER_WEBGL}>WebGL</option>
-      </select>
+        <Select.Option value={RENDER_CANVAS_OPTIMIZED}>
+          Canvas optimized
+        </Select.Option>
+        <Select.Option value={RENDER_CANVAS_SLOW}>Canvas slow</Select.Option>
+        <Select.Option value={RENDER_WEBGL}>WebGL</Select.Option>
+      </Select>
     </label>
   );
 }
