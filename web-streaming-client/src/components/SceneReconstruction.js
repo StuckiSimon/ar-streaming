@@ -1,19 +1,19 @@
 import { Suspense, useEffect, useState } from "react";
 import * as THREE from "three";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { Canvas, useThree } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import { Bounds, OrbitControls } from "@react-three/drei";
 import styles from "./SceneReconstruction.module.scss";
 
 function MeshViewer({ mesh }) {
-  const camera = useThree(({ camera }) => camera);
-  useEffect(() => {
-    camera.position.z = -1;
-  }, [mesh, camera]);
   return (
     <Suspense fallback={null}>
-      {mesh ? <primitive object={mesh} /> : null}
-      <OrbitControls />
+      {mesh ? (
+        <Bounds fit clip observe damping={6} margin={1.2}>
+          <primitive object={mesh} />
+        </Bounds>
+      ) : null}
+      <OrbitControls makeDefault />
     </Suspense>
   );
 }
